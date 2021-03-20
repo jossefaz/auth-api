@@ -2,6 +2,8 @@ fastapi
 uvicorn
 passlib
 python-multipart==0.0.5
+httpx
+python-jose
 
 # dev
 pytest
