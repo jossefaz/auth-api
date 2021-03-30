@@ -30,3 +30,4 @@ def test_verify_token(test_app: TestClient):
     test_app.headers["access-token"] = access_token
     response = test_app.post("/auth/credentials")
     assert response.status_code == status.HTTP_200_OK
+    assert response.json()["username"] == "some_email"

@@ -35,6 +35,7 @@ async def login(request: User):
 async def check_token(access_token: Optional[str] = Header(None)):
     if not access_token:
         raise_401_exception()
-    if not token.verify_token(access_token):
+    token_data = token.verify_token(access_token)
+    if not token_data:
         raise_401_exception()
-    return "OK"
+    return token_data
