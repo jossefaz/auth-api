@@ -21,9 +21,12 @@ def create_access_token(data: dict):
 def verify_token(token: str):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
+        username: str = payload.get("username")
+        user_id: str = payload.get("id")
+        print(payload)
         if username is None:
             return False
-        return TokenData(username=username)
-    except JWTError:
+        return TokenData(username=username, user_id=user_id)
+    except JWTError as e:
+        print(e)
         return False

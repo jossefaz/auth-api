@@ -9,3 +9,4 @@ class User(BaseModel):
 
 class TokenData(BaseModel):
     username: Optional[str] = None
+    user_id:Optional[int]
