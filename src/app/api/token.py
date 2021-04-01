@@ -31,7 +31,6 @@ async def check_token(access_token: Optional[str] = Header(None)):
     if not access_token:
         raise_401_exception()
     token_data = token.verify_token(access_token)
-    print(token_data)
     if not token_data:
         raise_401_exception()
     return token_data
