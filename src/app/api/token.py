@@ -18,7 +18,7 @@ def raise_401_exception():
 @router.post('/login', status_code=status.HTTP_200_OK)
 async def login(request: User):
     credentials = await http.check_user_credentials(request)
-    if "username" not in credentials:
+    if not credentials:
         raise_401_exception()
     access_token = token.create_access_token(
         data={"username": request.username, "id": credentials["id"]}
