@@ -20,6 +20,8 @@ async def login(request: User):
     credentials = await http.check_user_credentials(request)
     if not credentials:
         raise_401_exception()
+    if "username" not in credentials or "id" not in credentials:
+        raise_401_exception()
     access_token = token.create_access_token(
         data={"username": request.username, "id": credentials["id"]}
     )
