@@ -2,7 +2,8 @@ from typing import Optional
 
 from fastapi import APIRouter, status, HTTPException, Header
 from .schemas import User
-from ..utils import token, http
+from ..utils import token
+from ..utils.http import HTTPFactory
 
 router = APIRouter()
 
@@ -17,7 +18,7 @@ def raise_401_exception():
 
 @router.post('/login', status_code=status.HTTP_200_OK)
 async def login(request: User):
-    credentials = await http.check_user_credentials(request)
+    credentials = await HTTPFactory.instance.check_user_credentials(request)
     if not credentials:
         raise_401_exception()
     if "username" not in credentials or "id" not in credentials:

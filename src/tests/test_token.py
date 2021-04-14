@@ -4,7 +4,8 @@ import pytest
 from fastapi import status
 from starlette.testclient import TestClient
 
-from ..app.utils import http, token
+from ..app.utils import token
+from ..app.utils.http import HTTPFactory
 
 
 @pytest.mark.parametrize(
@@ -22,7 +23,7 @@ def test_check_credentials(test_app: TestClient, monkeypatch, payload, credentia
         if credential_status_code == status.HTTP_401_UNAUTHORIZED:
             return {"detail": "Incorrect username or password"}
 
-    monkeypatch.setattr(http, "check_user_credentials", mock_check_user_credentials)
+    monkeypatch.setattr(HTTPFactory, "check_user_credentials", mock_check_user_credentials)
     response = test_app.post("/auth/login", data=json.dumps(payload))
     assert response.status_code == status_code
 
