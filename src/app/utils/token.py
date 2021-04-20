@@ -30,3 +30,8 @@ def verify_token(token: str):
     except JWTError as e:
         print(e)
         return False
+
+
+def refresh_token(token: str):
+    payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    return create_access_token({"username": payload.get("username"), "id": payload.get("id")})

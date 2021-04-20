@@ -1,7 +1,7 @@
 from typing import Optional
 
-from fastapi import APIRouter, status, HTTPException, Header
-from .schemas import User
+from fastapi import APIRouter, status, HTTPException, Header, Response
+from .schemas import User, TokenData
 from ..utils import token
 from ..utils.http import HTTPFactory
 
@@ -29,11 +29,12 @@ async def login(request: User):
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.post('/credentials', status_code=status.HTTP_200_OK)
-async def check_token(access_token: Optional[str] = Header(None)):
+@router.post('/credentials', status_code=status.HTTP_200_OK, response_model=TokenData)
+async def check_token(response:Response, access_token: Optional[str] = Header(None), ):
     if not access_token:
         raise_401_exception()
     token_data = token.verify_token(access_token)
     if not token_data:
         raise_401_exception()
+    response.headers["access_token"] = token.refresh_token(access_token)
     return token_data
