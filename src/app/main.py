@@ -7,6 +7,7 @@ from .api import monitor, token
 from .utils.logs import RestLogger, log_http_request, log_http_response
 from .utils.http import HTTPFactory
 
+
 RestLogger.init_logger()
 app = FastAPI()
 
@@ -16,6 +17,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["token"]
 )
 
 

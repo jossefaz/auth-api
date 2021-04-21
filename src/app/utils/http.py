@@ -32,7 +32,7 @@ class HTTPFactory(metaclass=SingletonMeta):
     async def check_user_credentials(self, user: User):
         async with httpx.AsyncClient() as client:
             try:
-                result = await client.post(url=URL, data=user.json(), headers={"access_token": API_KEY,
+                result = await client.post(url=URL, data=user.json(), headers={"apiKey": API_KEY,
                                                                                "X-Request-ID": self.request_id})
                 if result.status_code == status.HTTP_200_OK:
                     return result.json()
