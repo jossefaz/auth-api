@@ -26,7 +26,7 @@ async def login(request: User):
     access_token = token.create_access_token(
         data={"username": request.username, "id": credentials["id"]}
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access-token": access_token, "token_type": "bearer"}
 
 
 @router.post('/credentials', status_code=status.HTTP_200_OK, response_model=TokenData)
@@ -36,5 +36,5 @@ async def check_token(response:Response, access_token: Optional[str] = Header(No
     token_data = token.verify_token(access_token)
     if not token_data:
         raise_401_exception()
-    response.headers["access_token"] = token.refresh_token(access_token)
+    response.headers["access-token"] = token.refresh_token(access_token)
     return token_data
