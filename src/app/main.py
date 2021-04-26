@@ -20,7 +20,7 @@ app.add_middleware(
     expose_headers=["token"]
 )
 
-
+# HTTP MIDDLEWARE : for adding request id and auth
 @app.middleware("http")
 async def add_request_id_process_time_header(request: Request, call_next):
     request_id = str(uuid.uuid4()) if "X-Request-ID" not in request.headers else request.headers["X-Request-ID"]
