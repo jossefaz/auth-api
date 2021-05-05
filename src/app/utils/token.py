@@ -21,8 +21,13 @@ def create_access_token(data: dict):
 def verify_token(token: str):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("username")
-        user_id: str = payload.get("id")
+
+        username_key = os.getenv("USERNAME_RETURN_KEY")
+        id_key = os.getenv("ID_RETURN_KEY")
+        username: str = payload.get(username_key) if username_key and username_key in payload \
+            else payload.get("username")
+        user_id: str = payload.get(id_key) if id_key and id_key in payload \
+            else payload.get("id")
         print(payload)
         if username is None:
             return False

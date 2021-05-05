@@ -12,4 +12,6 @@ services:
       - SECRET_JWT_KEY=71e44ea7cc314cf222fcee8403743c5b4056ebc1c9d82b0c95c0c5fc17de89c1
       - TOKEN_EXPIRATION_MINUTES=30
       - ACCESS_TOKEN_KEY=token
+      - USERNAME_RETURN_KEY=username
+      - ID_RETURN_KEY=id
     network_mode: host
